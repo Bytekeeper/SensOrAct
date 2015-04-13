@@ -3,6 +3,8 @@
 
 #include <Arduino.h>
 
+#define MESSAGE_DISPATCH(CODE, TYPE, CALLBACK) if (payload.type == (CODE)) { CALLBACK( (TYPE*) &payload); }
+
 const uint8_t TYPE_RGB_LED = 0;
 
 typedef struct {
