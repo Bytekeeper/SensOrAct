@@ -1,25 +1,41 @@
 #ifndef _SENSORS_H_
 #define _SENSORS_H_
 
-#include <Arduino.h>
-
 #define MESSAGE_DISPATCH(CODE, TYPE, CALLBACK) if (payload.type == (CODE)) { CALLBACK( (TYPE*) &payload); }
 
-const uint8_t TYPE_RGB_LED = 0;
+
+// Types 0-200 currently reserved
+// Types 201-255 for custom messages
+const uint8_t TYPE_TRIGGER = 1;
+const uint8_t TYPE_SWITCH = 2;
 
 typedef struct {
     uint8_t type;
     uint8_t payload[15];
 } Message;
 
-const uint8_t RGB_LED_MODE_FADE = 0;
+/**
+ * As incoming message:
+ * Command to trigger the actor "id"
+ * As outgoing message:
+ * Sensor "id" was triggered - event.
+ */
+struct Trigger_t {
+  // TYPE_TRIGGER
+  uint8_t type;
+  // id of sensor or actor to trigger
+  uint8_t id;
+};
 
-typedef struct {
+/**
+ * As outgoing message:
+ * Sensor "id"s state changed
+ */
+struct Switch_t {
+    // TYPE_SWITCH
     uint8_t type;
-    uint8_t mode;
-    uint16_t src_r, src_g, src_b;
-    uint16_t trg_r, trg_g, trg_b;
-
-} CmdRGBLedFade;
+    uint8_t id;
+    bool on;
+};
 
 #endif
