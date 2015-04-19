@@ -6,6 +6,7 @@
 
 // Types 0-200 currently reserved
 // Types 201-255 for custom messages
+const uint8_t TYPE_IDENTIFY = 0;
 const uint8_t TYPE_TRIGGER = 1;
 const uint8_t TYPE_SWITCH = 2;
 
@@ -15,6 +16,20 @@ typedef struct {
 } Message;
 
 /**
+ * TYPE_IDENTIFY - 0
+ * As incoming message:
+ * Command to identify device
+ * As outgoing message:
+ * Device identification
+ */
+struct Identity_t {
+    // TYPE_IDENTITY
+    uint8_t type;
+    char identity[19];
+};
+
+/**
+ * TYPE_TRIGGER - 1
  * As incoming message:
  * Command to trigger the actor "id"
  * As outgoing message:
@@ -28,6 +43,7 @@ struct Trigger_t {
 };
 
 /**
+ * TYPE_SWITCH - 2
  * As outgoing message:
  * Sensor "id"s state changed
  */
