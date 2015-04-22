@@ -1,6 +1,8 @@
 #ifndef _SENSORS_H_
 #define _SENSORS_H_
 
+#define PACKED __attribute__((packed))
+
 #define MESSAGE_DISPATCH(CODE, TYPE, CALLBACK) if (payload.type == (CODE)) { CALLBACK( (TYPE*) &payload); }
 
 
@@ -10,10 +12,10 @@ const uint8_t TYPE_IDENTIFY = 0;
 const uint8_t TYPE_TRIGGER = 1;
 const uint8_t TYPE_SWITCH = 2;
 
-typedef struct {
+struct Message_t {
     uint8_t type;
     uint8_t payload[15];
-} Message;
+} PACKED;
 
 /**
  * TYPE_IDENTIFY - 0
@@ -26,7 +28,7 @@ struct Identity_t {
     // TYPE_IDENTITY
     uint8_t type;
     char identity[19];
-};
+} PACKED;
 
 /**
  * TYPE_TRIGGER - 1
@@ -40,7 +42,7 @@ struct Trigger_t {
   uint8_t type;
   // id of sensor or actor to trigger
   uint8_t id;
-};
+} PACKED;
 
 /**
  * TYPE_SWITCH - 2
@@ -52,6 +54,6 @@ struct Switch_t {
     uint8_t type;
     uint8_t id;
     bool on;
-};
+} PACKED;
 
 #endif
